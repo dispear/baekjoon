@@ -1,31 +1,42 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-public class Main {
 
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		int n = s.nextInt();
-		int m = s.nextInt();
+public class Main {
+	public static void main(String[] args) throws IOException {
+		StringTokenizer st;
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+
+		st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
 		
-		boolean[] visited = new boolean[n+1];
-		int[] sortArr = new int[n];
-		int[] numArr = new int[n+1];
 		ArrayList<Integer>[] arr = new ArrayList[n+1];
+		int[] count = new int[n+1];
+		int[] sort = new int[n];
+		boolean[] visited = new boolean[n+1];
+
 		for(int i=0;i<=n;i++) {
 			arr[i] = new ArrayList<>();
 		}
+		
 		for(int i=0;i<m;i++) {
-			int a = s.nextInt();
-			int b = s.nextInt();
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			
 			arr[a].add(b);
-			numArr[b]++;
+			count[b]++;
 		}
-
+		
 		for(int i=0;i<n;i++) {
 			for(int j=1;j<=n;j++) {
-				if(numArr[j]==0 && visited[j] == false) {
-					sortArr[i] = j;
+				if(count[j] == 0 && visited[j] == false) {
+					sort[i] = j;
 					for(int k=0;k<arr[j].size();k++) {
-						numArr[arr[j].get(k)]--;
+						count[arr[j].get(k)]--;
 					}
 					visited[j] = true;
 					break;
@@ -33,8 +44,10 @@ public class Main {
 			}
 		}
 		
-		for(int i=0;i<sortArr.length;i++) {
-			System.out.print(sortArr[i] + " ");
+		for(int i=0;i<n;i++) {
+			sb.append(sort[i] + " ");
 		}
+		
+		System.out.println(sb);
 	}
 }
